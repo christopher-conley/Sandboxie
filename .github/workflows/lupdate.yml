@@ -2,15 +2,15 @@ name: Update language files
 
 on:
   workflow_dispatch:
-  schedule:
-    # runs every night
-    - cron: '0 1 * * *'
+  # schedule:
+  #   # runs every night
+  #   - cron: '0 1 * * *'
 
 jobs:
   SBIE_Plus_lupdate:
     name: SBIE Plus lupdate
     # Skip the job on forks
-    if: (github.event_name == 'schedule' && github.repository_owner == 'sandboxie-plus') || (github.event_name != 'schedule')
+    if: (github.event_name == 'schedule' && github.repository_owner == 'christopher-conley') || (github.event_name != 'schedule')
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -50,7 +50,7 @@ jobs:
   SBIE_reports:
     name: SBIE reports
     # Skip the job on forks
-    if: (github.event_name == 'schedule' && github.repository_owner == 'sandboxie-plus') || (github.event_name != 'schedule')
+    if: (github.event_name == 'schedule' && github.repository_owner == 'christopher-conley') || (github.event_name != 'schedule')
     runs-on: windows-2019
     timeout-minutes: 15
 
