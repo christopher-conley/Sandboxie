@@ -634,7 +634,7 @@ _FX NTSTATUS KphValidateCertificate()
         //
 
         //if (_wcsicmp(L"SIGNATURE", name) == 0 && signature == NULL) {
-		if (true) {
+		if (TRUE) {
             signatureSize = b64_decoded_size(value);
             signature = Mem_Alloc(Driver_Pool, signatureSize);
             if (!signature) {
@@ -1196,7 +1196,7 @@ BOOLEAN GetFwUuid(unsigned char* uuid)
 
     //ExFreePoolWithTag(pSfti, 'vhpK');
 
-    return true;
+    return TRUE;
 }
 
 wchar_t* hexbyte(UCHAR b, wchar_t* ptr)
