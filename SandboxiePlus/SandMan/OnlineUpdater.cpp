@@ -118,7 +118,7 @@ SB_PROGRESS COnlineUpdater::GetUpdates(QObject* receiver, const char* member, co
 	//if (UpdateKey.isEmpty())
 	//	UpdateKey = theAPI->GetGlobalSettings()->GetText("UpdateKey"); // theConf->GetString("Options/UpdateKey");
 	//if (UpdateKey.isEmpty())
-	UpdateKey = "00000000000000000000000000000000";
+	QString UpdateKey = "00000000000000000000000000000000";
 	Query.addQueryItem("update_key", UpdateKey);
 	
 	quint64 RandID = COnlineUpdater::GetRandID();
