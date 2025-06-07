@@ -93,6 +93,8 @@ quint64 COnlineUpdater::GetRandID()
 
 SB_PROGRESS COnlineUpdater::GetUpdates(QObject* receiver, const char* member, const QVariantMap& Params)
 {
+	return SB_OK;
+
 	QUrlQuery Query;
 	Query.addQueryItem("action", "update");
 	Query.addQueryItem("software", "sandboxie-plus");
@@ -112,11 +114,11 @@ SB_PROGRESS COnlineUpdater::GetUpdates(QObject* receiver, const char* member, co
 	Query.addQueryItem("debug", "1");
 #endif
 
-	QString UpdateKey = GetArguments(g_Certificate, L'\n', L':').value("UPDATEKEY");
+	//QString UpdateKey = GetArguments(g_Certificate, L'\n', L':').value("UPDATEKEY");
 	//if (UpdateKey.isEmpty())
 	//	UpdateKey = theAPI->GetGlobalSettings()->GetText("UpdateKey"); // theConf->GetString("Options/UpdateKey");
 	//if (UpdateKey.isEmpty())
-	//	UpdateKey = "00000000000000000000000000000000";
+	UpdateKey = "00000000000000000000000000000000";
 	Query.addQueryItem("update_key", UpdateKey);
 	
 	quint64 RandID = COnlineUpdater::GetRandID();
@@ -319,25 +321,26 @@ SB_PROGRESS COnlineUpdater::GetSupportCert(const QString& Serial, QObject* recei
 	CUpdatesJob* pJob = new CGetCertJob(Params, this);
 	StartJob(pJob, Url);
 	QObject::connect(pJob, SIGNAL(Certificate(const QByteArray&, const QVariantMap&)), receiver, member, Qt::QueuedConnection);
-	return SB_PROGRESS(OP_ASYNC, pJob->m_pProgress);
+	//return SB_PROGRESS(OP_ASYNC, pJob->m_pProgress);
+	return SB_OK;
 }
 
 extern "C" NTSTATUS NTAPI NtQueryInstallUILanguage(LANGID* LanguageId);
 
 bool COnlineUpdater::IsLockRequired()
 {
-	if (theConf->GetBool("Debug/LockedRegion", false))
-		return true;
+	//if (theConf->GetBool("Debug/LockedRegion", false))
+	//	return true;
 
-	if (g_CertInfo.lock_req)
-		return true;
+	//if (g_CertInfo.lock_req)
+	//	return true;
 
-	LANGID LangID = 0;
-	if ((NtQueryInstallUILanguage(&LangID) == 0) && (LangID == 0x0804))
-		return true;
+	//LANGID LangID = 0;
+	//if ((NtQueryInstallUILanguage(&LangID) == 0) && (LangID == 0x0804))
+	//	return true;
 
-	if (theGUI->m_LanguageId == 0x0804)
-		return true;
+	//if (theGUI->m_LanguageId == 0x0804)
+	//	return true;
 
 	return false;
 }
@@ -447,8 +450,8 @@ bool COnlineUpdater::ShowCertWarningIfNeeded()
 	int Ret = QMessageBox("Sandboxie-Plus", Message, QMessageBox::Warning, QMessageBox::Yes, QMessageBox::No | QMessageBox::Escape | QMessageBox::Default, QMessageBox::Cancel, theGUI).exec();
 	if (Ret == QMessageBox::Cancel) {
 		QTimer::singleShot(10, this, [=] {
-			theConf->DelValue("Updater/InstallerPath");
-			theConf->DelValue("Updater/UpdateVersion");
+			//theConf->DelValue("Updater/InstallerPath");
+			//theConf->DelValue("Updater/UpdateVersion");
 			theGUI->UpdateLabel();
 		});
 	}
@@ -533,6 +536,8 @@ void COnlineUpdater::Process()
 
 void COnlineUpdater::CheckForUpdates(bool bManual)
 {
+	return;
+
 	if (m_CheckMode == eManual || m_CheckMode == eAuto)
 		return; // already in progress
 
