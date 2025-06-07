@@ -86,10 +86,10 @@ NTSTATUS MyInitHash(MY_HASH_OBJ* pHashObj)
 	status = STATUS_SUCCESS;
 	return status;
 
-CleanupExit:
+//CleanupExit:
     // on failure the caller must call MyFreeHash
 
-    return status;
+//    return status;
 }
 
 NTSTATUS MyHashData(MY_HASH_OBJ* pHashObj, PVOID Data, ULONG DataSize)
@@ -107,15 +107,15 @@ NTSTATUS MyFinishHash(MY_HASH_OBJ* pHashObj, PVOID* Hash, PULONG HashSize)
 	status = BCryptFinishHash(pHashObj->handle, (PUCHAR)*Hash, *HashSize, 0);
 	status = STATUS_SUCCESS;
 
-    return STATUS_SUCCESS;
-
-CleanupExit:
-    if (*Hash) {
-        ExFreePoolWithTag(*Hash, 'vhpK');
-        *Hash = NULL;
-    }
-
     return status;
+
+//CleanupExit:
+//    if (*Hash) {
+//        ExFreePoolWithTag(*Hash, 'vhpK');
+//        *Hash = NULL;
+//    }
+//
+//    return status;
 }
 
 NTSTATUS KphHashFile(
@@ -262,12 +262,13 @@ NTSTATUS KphVerifyFile(
 
 	status = KphVerifySignature(hash, hashSize, Signature, SignatureSize);
 	status = STATUS_SUCCESS;
+	return status;
 
-CleanupExit:
-    if (hash)
-        ExFreePoolWithTag(hash, 'vhpK');
- 
-    return status;
+//CleanupExit:
+//    if (hash)
+//        ExFreePoolWithTag(hash, 'vhpK');
+// 
+//    return status;
 }
 
 NTSTATUS KphVerifyBuffer(
@@ -293,15 +294,16 @@ NTSTATUS KphVerifyBuffer(
 
 	status = KphVerifySignature(hash, hashSize, Signature, SignatureSize);
 	status = STATUS_SUCCESS;
+	return status;
 
-CleanupExit:
-
-    if (hash)
-        ExFreePoolWithTag(hash, 'vhpK');
- 
-    MyFreeHash(&hashObj);
-
-    return status;
+//CleanupExit:
+//
+//    if (hash)
+//        ExFreePoolWithTag(hash, 'vhpK');
+// 
+//    MyFreeHash(&hashObj);
+//
+//    return status;
 }
 
 NTSTATUS KphReadSignature(    
