@@ -86,6 +86,8 @@ jobs:
   Build_x64:
     runs-on: windows-2019
     timeout-minutes: 45
+    permissions:
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -181,6 +183,10 @@ jobs:
             Installer/Assets/*
           retention-days: 60
 
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.7.0
+      - name: test sign
+        run: cosign sign-blob Installer/SbiePlus_x64/SandMan.exe --bundle cosign.bundle --yes
       - name: Upload Sandboxie x64
         #if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4.6.2
